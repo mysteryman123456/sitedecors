@@ -104,11 +104,6 @@ const AddWebsite = () => {
 
   return (
     <>
-    <div className="submit-row">
-      <div className="btn-grp">
-        <button className="upload">Publish</button>
-      </div>
-    </div>
     <div className="add-page">
       <div className="columns">
         <div className="column">
@@ -272,6 +267,11 @@ const AddWebsite = () => {
             <small>Add the above code to your main landing page just below your {bodyTag} tag to verify your listing. Your listing will be verfied ASAP!</small>
           </div>
         </div>
+      </div>
+    </div>
+      <div className="submit-row">
+      <div className="btn-grp">
+        <button className="upload">Publish</button>
       </div>
     </div>
     </>
