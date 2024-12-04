@@ -1,0 +1,150 @@
+.seller-dashboard {
+    display: flex;
+  }
+  .sidebar {
+    min-width: 230px;
+    max-width:230px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-right:1px solid #eee;
+  }
+  
+  .seller-dashboard i{
+    font-size:17px;
+  }
+  
+  .sidebar h2{
+    font-weight:600;
+    margin-bottom:15px;
+    color: #333;
+    position: relative;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li a{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    color: #333;
+    font-size: 0.9em;
+    gap: 10px;
+    align-items: center;
+    font-weight: 500;
+    margin-top:10px;
+    transition: color 0.1s ease, background-color 0.2s ease;
+  }
+  
+  .sidebar ul li a:hover {
+    background-color: rgb(244, 244, 244);
+  }
+  
+  .dashboard-content {
+    flex-grow: 1;
+  }
+  .seller-dashboard .sidebar ul li a.active {
+    background-color: whitesmoke;
+  }
+
+.ch-p-container {
+  width:calc(100% - 40px);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.ch-p-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight:600;
+  color: #333;
+}
+
+
+.ch-p-input-group {
+  margin-bottom: 15px;
+}
+
+.ch-p-input-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.ch-p-input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+.ch-p-cta-button {
+  margin-left: auto;
+  background-color:black;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight:550;
+  cursor: pointer;
+}
+.ch-p-image-cta{
+  gap: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+.ch-p-btn-group{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ch-p-addImage,.ch-p-removeImage{
+  padding: 14px 20px;
+  border: 0;
+  height:35px;
+  display: flex;
+  flex-direction: row;
+  gap:5px;
+  align-items: center;
+  font-weight:550;
+  border-radius:50px;
+  color:white;
+  cursor: pointer;
+  background-color:rgb(101, 173, 254);
+}
+.ch-p-removeImage{
+  background-color:white;
+  border:2px solid rgb(230, 230, 230);
+  color:black;
+}
+.ch-p-image {
+  width: 120px;
+  height: 120px;
+  border-radius:7px;
+  object-fit: cover;
+}
+
+.ch-p-image-drop-area i{
+  font-size:35px;
+}
+.ch-p-image-drop-area small{
+  color:dimgray;
+  position: relative;
+  top:5px;
+}
+.ch-p-image-drop-area label{
+  margin-top:10px;
+}
+.ch-p-image-drop-area span {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
