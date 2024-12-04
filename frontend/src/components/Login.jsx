@@ -25,7 +25,7 @@ const Login = () => {
       <input onChange={handleChange} name='email' placeholder='Email' type="text" />
       <input onChange={handleChange} name='password' placeholder='Password' type="password" />
       <div className="forgot-password-layer"><Link to="/forgot-password">Forgot your password?</Link></div>
-      <button onClick={handleLogin} className='cta-login-btn'><span className='btn-icon'><i className="ri-lock-star-line"></i></span><span>Log in</span></button>
+      <button onClick={handleLogin} className='cta-login-btn another-added-using-.'><span className='btn-icon'><i className="ri-lock-star-line"></i></span><span>Log in</span></button>
     </div>
     </div>
   )
