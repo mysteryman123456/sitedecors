@@ -5,7 +5,7 @@ const Footer = () => {
     <footer>
       <h2>SiteDecors.com</h2>
       <p>A web marketplace to Buy and Sell websites at ease with no charges!</p>
-      <small>sitedecors &copy; 2025 All rights reserved</small>
+      <small>sitedecors &copy; 2025 All rights reserved for sitedecors</small>
     </footer>
   )
 }
