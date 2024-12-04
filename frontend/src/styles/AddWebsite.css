@@ -217,9 +217,9 @@ input:-moz-autofill{
 .submit-row{
   display: flex;
   align-items: center;
-  margin-bottom: -20px;
-  padding:20px 25px;
+  padding:10px 20px;
   justify-content: flex-end;
+  margin-top: -20px;
 }
 .submit-row .btn-grp button{
   cursor: pointer;
