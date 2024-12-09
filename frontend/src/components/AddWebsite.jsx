@@ -83,8 +83,6 @@ const AddWebsite = () => {
       images: prevData.images.filter((_,i) => i !== index), 
     }));
   };
- 
-  console.log(formData)
 
   const handleAssetChange = (e) => {
     const value = e.target.value;
@@ -271,7 +269,7 @@ const AddWebsite = () => {
     </div>
       <div className="submit-row">
       <div className="btn-grp">
-        <button className="upload">Publish your listing</button>
+        <button className="upload">Publish your Listing</button>
       </div>
     </div>
     </>

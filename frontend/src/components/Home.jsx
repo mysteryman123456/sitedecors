@@ -5,7 +5,9 @@ import categories from '../components/Categories';
 const Home = () => {
     const location = useLocation();
     const {category , subcategory} = useParams();
+
     useEffect(() => {
+        
         const searchInput = document.getElementById("filterSearch");
         const containers = document.querySelectorAll(".container");
         const filterContainers = () => {
