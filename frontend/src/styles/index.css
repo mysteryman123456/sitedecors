@@ -413,10 +413,10 @@ aside{
   .login-content a, .signup-content a{
     color:rgb(52, 52, 52);
   }
-  .signup-content p{
+  .signup-content p , .login-content p{
     margin-top: 20px;
   }
-  .signup-content a{
+  .signup-content a, .login-content a{
     font-weight: 600;
   }
   .cta-login-btn,.cta-signup-btn{
