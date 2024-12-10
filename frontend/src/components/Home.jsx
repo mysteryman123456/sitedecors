@@ -7,7 +7,6 @@ const Home = () => {
     const {category , subcategory} = useParams();
 
     useEffect(() => {
-        
         const searchInput = document.getElementById("filterSearch");
         const containers = document.querySelectorAll(".container");
         const filterContainers = () => {

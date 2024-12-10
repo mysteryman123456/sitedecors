@@ -15,6 +15,8 @@ import ChangePassword from "./components/ChangePassword"
 import AddWebsite from "./components/AddWebsite"
 import NotFound from "./components/NotFound"
 import { CategoryProvider } from "./context/CategoryContext";
+import ForgotPassword from './components/ForgotPassword';
+import EmailInitiator from './components/EmailInitiator';
 function App() {
   return (
     <CategoryProvider>
@@ -24,6 +26,8 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/signup" element={<Signup/>} />
+      <Route path="/forgot-password" element={<ForgotPassword/>} />
+      <Route path="/email-initiator/:action" element={<EmailInitiator/>} />
       <Route path="/:category" element={<Home/>} />
       <Route path="/:category/:subcategory" element={<Home/>}/>
       <Route path="*" element={<NotFound/>}/>
