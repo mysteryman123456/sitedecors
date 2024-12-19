@@ -11,15 +11,15 @@ import Dashboard from "./components/Dashboard"
 import Profile from "./components/Profile"
 import Satistics from "./components/Statistics"
 import EditListing from "./components/EditListing"
-import ChangePassword from "./components/ChangePassword"
 import AddWebsite from "./components/AddWebsite"
 import NotFound from "./components/NotFound"
-import { CategoryProvider } from "./context/CategoryContext";
 import ForgotPassword from './components/ForgotPassword';
 import EmailInitiator from './components/EmailInitiator';
+// context
+import {SessionProvider} from "./context/SessionContext"
 function App() {
   return (
-    <CategoryProvider>
+    <SessionProvider>
     <Router>
     <Navbar />
     <Routes>
@@ -35,16 +35,14 @@ function App() {
           <Route path="add-website" element={<AddWebsite/>}/>
           <Route path="*" element={<NotFound/>}/>
           <Route path="profile" element={<Profile/>}/>
-          <Route path="change-password" element={<ChangePassword/>}/>
           <Route path="edit-listing" element={<EditListing/>}/>
           <Route path="statistics" element={<Satistics/>}/>
           <Route index element={<Satistics/>}/>
       </Route>
-
     </Routes>
     <Footer />
   </Router>
-  </CategoryProvider>
+  </SessionProvider>
   );
 }
 

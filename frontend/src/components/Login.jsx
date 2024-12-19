@@ -12,26 +12,30 @@ const Login = () => {
     const{name , value} = event.target;
     setLoginData((prevData)=>({...prevData , [name] : value}))
   }
-  const handleLogin= async()=>{
-    try{
-      const response = await fetch("http://localhost:3008/login",{
-        method : "POST",
-        body : JSON.stringify(loginData),
-        headers : {
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:3008/login", {
+        method: "POST",
+        body: JSON.stringify(loginData),
+        headers: {
           "Content-Type": "application/json",
-        }
+        },
       });
       const data = await response.json();
-      if(response.ok && response.status === 200){
-        window.success(data.message)
-        navigate("../");
-      }else{
-        window.failure(data.message)
+  
+      if (response.ok && response.status === 200) {
+        window.success(data.message);
+        localStorage.setItem("token", data.token);
+        navigate("../dashboard");
+      }else {
+        window.failure(data.message);
       }
-    }catch(err){
-      console.log(err);
-    } 
-  }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className='login-container'>
     <div className='login-content'>

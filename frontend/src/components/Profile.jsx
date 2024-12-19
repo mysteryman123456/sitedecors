@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Placeholder from '../Static/Images/placeholder.jpeg';
 import '../styles/Dashboard.css'; 
-
+import {useSession} from '../context/SessionContext'
 const Profile = () => {
+
+  const {sessionData} = useSession();
   const[profileData , setProfileData] = useState({
     profile_image : [],
     fullname : "",
-    email : "",
     phonenumber : "",
+    email : "",
   })
+
+  useEffect(()=>{
+    if(sessionData?.email){
+      setProfileData((prevData)=>({...prevData , email : [sessionData.email]}))
+    }
+  },[sessionData])
 
   const handleFileChange = (e) => {
     e.preventDefault();
@@ -69,6 +77,16 @@ const Profile = () => {
             </div>
           </div>
         <div className="ch-p-input-group">
+          <label htmlFor="email">Email</label>
+          <input
+            name='email'
+            value={profileData.email}
+            placeholder='Email will appear here'
+            readOnly
+            disabled
+          />
+        </div>
+        <div className="ch-p-input-group">
           <label htmlFor="fullName">Full Name</label>
           <input
           onChange={handleChange}
@@ -90,19 +108,31 @@ const Profile = () => {
             placeholder='Enter your phonenumber'
           />
         </div>
-
+        
         <div className="ch-p-input-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="oldPassword">Old Password</label>
           <input
-                      onChange={handleChange}
-                      name='email'
-            type="email"
-            id="email"
-            placeholder='Email will appear here'
-            readOnly
-            disabled
+          onChange={handleChange}
+            name='old_password'
+            type="password"
+            id="oldPassword"
+            placeholder="Enter your old password"
+            required
           />
         </div>
+
+        <div className="ch-p-input-group">
+          <label htmlFor="newPassword">New Password</label>
+          <input
+            onChange={handleChange}
+            name='new_password'
+            type="password"
+            id="newPassword"
+            placeholder="Enter your new password"
+            required
+          />
+        </div>
+
         <button onClick={handleProfile} className="ch-p-cta-button">Save Profile</button>
     </div>
   );

@@ -71,8 +71,6 @@ nav{
     align-items: center;
     height:45px;
     width:100%;
-    max-width:800px;
-    margin:auto;
 }
 .searchbar button{
     width:45px;
@@ -433,3 +431,226 @@ aside{
     float:left;
     opacity:0.4;
   }
+
+  .card {
+    padding: 10px;
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin:20px;
+    overflow: hidden;
+    background: #fff;
+  }
+  
+  .card-image {
+    border-radius:6px;
+    min-width:280px;
+    max-width:280px;
+    min-height:180px;
+    max-height:180px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    border-radius:5px;
+  }
+  .ri-expand-diagonal-fill{
+    color:white;
+    font-size:20px;
+  }
+  .enlargeImage{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom:5px;
+    right:5px;
+    background-color:black;
+    z-index: 9999999;
+    border-radius:5px;
+    width:30px;
+    height:30px;
+  }
+  .card-content h5{
+    font-weight:600;
+  }
+  .card-content .description{
+    font-size:14px;
+  }
+  .t-s-u{
+    display: flex;
+    margin-left: -10px;
+  }
+  .tsu-content{
+    padding-left:10px;
+    padding-right: 10px;
+    border-right:1px solid #ccc;
+  }
+  .tsu-content p{
+    margin-bottom:5px;
+    font-size:13px;
+    color:dimgray;
+    font-weight:500;
+  }
+  .card-content {
+    width: 100%;
+    justify-content:space-between;
+    display: flex;
+  }
+  .middle-content{
+    margin-left:10px;
+    min-width:520px;
+    max-width:520px;
+    width:100%;
+  }
+  .middle-content,.last-content{
+    justify-content:space-between;
+    display: flex;
+    flex-direction:column;
+  }
+  .price{
+    margin-top: 10px;
+    font-weight:600;
+  }
+  .title{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    color:rgb(26, 88, 139);
+    font-weight:550;
+    font-size:17px;
+  }
+  .verified{
+    max-width:130px;
+    border-radius:50px;
+    text-align:center;
+    font-size:14px;
+    padding:3px 7px;
+    border:1px solid lightgrey;
+  }
+  .last-content{
+    text-align: right;
+  }
+  .assets .asset{
+    font-size:12px;
+    display:inline-block;
+    padding:2px 5px;
+    margin-left:5px;
+    border:1px solid #eee;
+    border-radius:50px;
+  }
+  .price-wrap small{
+    color: dimgray;
+  }
+  .view-demo-btn{
+    display: flex;
+    gap: 10px;
+  }
+  .live-btn,.view-btn{
+    color:black;
+    cursor: pointer;
+    padding:8px 16px;
+    border-radius:50px;
+    font-size:15px;
+    background-color:white;
+    border:1px solid black;
+  }
+  .view-btn{
+    background-color:black;
+    color:white;
+  }
+  .skeleton-card {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin:20px;
+    padding: 10px;
+    display: flex;
+  }
+
+  .sk-image {
+    border-radius: 5px;
+    min-width: 280px;
+    height: 180px;
+  }
+  
+  .sk-content {
+    margin-left: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sk-title,
+  .sk-sold-by,
+  .sk-description,
+  .sk-tsu,
+  .sk-price {
+    border-radius:5px;
+    height:8px;
+    margin-top: 10px;
+  }
+  
+  .sk-title,
+  .sk-description {
+    width: 100%;
+  }
+  
+  .sk-sold-by {
+    width: 20%;
+  }
+  
+  .sk-tsu {
+    width: 35%;
+  }
+  
+  .sk-price {
+    width: 50%;
+    margin-left: auto;
+    margin-bottom: 10px;
+  }
+  
+  .sk-verify {
+    width: 30%;
+    height: 20px;
+    border-radius: 50px;
+  }
+  
+  .sk-price-content {
+    min-width: 300px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sk-btn-wrap {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap:10px;
+  }
+  
+  .sk-btn {
+    height: 35px;
+    width: 40%;
+    border-radius: 50px;
+  }
+  .skeleton-animation{
+    background-color:#e2e5e7;
+    background-image: linear-gradient( 90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100% );
+    background-size:350px 100%;
+    background-repeat: no-repeat;
+    background-position: -350px 0;
+    animation: shine 0.8s ease-in-out infinite;
+}
+  @keyframes shine {
+    to {
+        background-position: 500px 0;
+   }
+}

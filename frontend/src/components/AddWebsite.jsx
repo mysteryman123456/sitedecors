@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import "../styles/AddWebsite.css";
 import categories from "../components/Categories";
-
-const AddWebsite = () => {  
+import {useSession} from "../context/SessionContext"
+const AddWebsite = () => { 
+  const[loading , setLoading] = useState(false);
+  const {sessionData} = useSession();
   const bodyTag = "<body>"
   const[copyReactIcon,setReactCopyIcon] = useState(false);
   const[copyHtmlIcon,setHtmlCopyIcon] = useState(false);
@@ -49,11 +51,18 @@ const AddWebsite = () => {
     technical_description : "",
     assets : [],
     images : [],
-    site_url : "",
+    website_url : "",
     video_url : "",
     co_founder : false,
     funds : false,
+    seller_email : "",
   });
+
+  useEffect(()=>{
+    if(sessionData?.email){
+      setFormData((prevData) => ({...prevData , seller_email : sessionData.email}))
+    }
+  },[sessionData])
 
  const handleDragOver = (e) => {
     e.preventDefault();
@@ -68,7 +77,11 @@ const AddWebsite = () => {
       ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'].includes(file.type)
     );
     if (validFiles.length === 0) {
-      alert("Please provide valid files");
+      window.failure("Please provide valid files");
+      return;
+    }
+    if ((validFiles.length + formData.images.length) > 3) {
+      window.failure("Upload maximum of 3 files");
       return;
     }
     validFiles.forEach((file)=>{
@@ -96,9 +109,60 @@ const AddWebsite = () => {
   const handleChange=(e)=>{
     const{name , value} = e.target;
     setFormData({...formData , [name] : value});
-    console.log(formData)
   }
+  const handleSubmit = async () => {
+    setLoading(true);
+    for(let key in formData){
+      const value = formData[key];
+      if(typeof value === "string" && value.trim().length === 0){
+        window.failure("Fields can't be empty")
+        setLoading(false)
+        return
+      }
+      if(Array.isArray(value) && value.length === 0 && key === "images"){
+        window.failure("Image is required");
+        setLoading(false);
+        return;
+      }
+      if(Array.isArray(value) && value.length === 0 && key === "assets"){
+        window.failure("Please choose an asset");
+        setLoading(false);
+        return;
+      }
+    }
+    const newFormData = new FormData();
+    for(let key in formData){
+      if(Array.isArray(formData[key]) && key === "images"){
+        formData[key].forEach((item)=>{
+          newFormData.append(`images[]`,item.image)
+        })
+      }else if(Array.isArray(formData[key]) && key === "assets"){
+        formData[key].forEach((item)=>{
+          newFormData.append(`assets[]`,item);
+        })
+      }else{
+        newFormData.append(`${key}`,formData[key])
+      }
+    }
 
+    try {
+      const response = await fetch("http://localhost:3008/add-website", {
+        method: "POST",
+        body: newFormData,
+      });
+      const data = await response.json();
+      if (response.ok && response.status === 201) {
+        setLoading(false);
+        window.success(data.message);
+      } else {
+        setLoading(false);
+        window.failure(data.message); 
+      }
+    } catch (err) {
+      setLoading(false);
+      window.failure("Please try again later"); 
+    }
+  };
 
   return (
     <>
@@ -109,7 +173,6 @@ const AddWebsite = () => {
             <h3>General Information</h3>
             <label>Title</label>
             <input name="title" onChange={handleChange} value={formData.title} placeholder="e.g, Automated ecommerce web app for sale" type="text" />
-
             {/* Categories and subcategories */}
             <label>Category</label>
             <select 
@@ -189,8 +252,8 @@ const AddWebsite = () => {
                     <label htmlFor="undisclosed">Undisclosed</label>
                 </div>
             </div>
-
           </div>
+          
         </div>
 
         <div className="column">
@@ -198,8 +261,8 @@ const AddWebsite = () => {
           <div className="container">
             <h3>Upload Image</h3>
             <div onDragOver={handleDragOver} onDrop={handleDrop} className="drag-drop">
-              <i class="ri-image-add-fill"></i>
-              <p>Drag & Drop images to upload</p>
+              <i className="ri-image-add-fill"></i>
+              <p>Drag & Drop upto 3 images to upload</p>
               <small>Png , Jpg , Webp formats only</small>
             </div>
             {formData.images && formData.images.length > 0 ? (
@@ -218,7 +281,7 @@ const AddWebsite = () => {
             <h3>Additional Information</h3>
 
             <label>Website's landing page url</label>
-            <input onChange={handleChange} value={formData.site_url} name="site_url" type="url" placeholder="e.g, sitedecors.com" />
+            <input onChange={handleChange} value={formData.website_url} name="website_url" type="url" placeholder="e.g, sitedecors.com" />
 
             <label>Explanation video url (<small>optional</small>)</label>
             <input  onChange={handleChange} value={formData.video_url}  name="video_url" type="url" placeholder="e.g, https://www.youtube.com/watch?v=abcdef12345" />
@@ -269,7 +332,7 @@ const AddWebsite = () => {
     </div>
       <div className="submit-row">
       <div className="btn-grp">
-        <button className="upload">Publish your Listing</button>
+        <button disabled={loading == true ? true : false} onClick={handleSubmit} className="upload">{loading == true ? "Please wait..." : "Publish your listing"}</button>
       </div>
     </div>
     </>

@@ -1,10 +1,17 @@
 import React from 'react';
 import '../styles/Dashboard.css';
-import { NavLink, Outlet  } from 'react-router-dom';
-
+import {Link, NavLink, Outlet} from 'react-router-dom';
+import useAuth from "./useAuth";
+import Logout from "./Logout";
 
 const Dashboard = () => {
 
+  const handleLogout=()=>{
+    Logout();
+  }
+
+  useAuth();
+  
   return (
     <div className='seller-dashboard'>
       <div className='sidebar'>
@@ -12,33 +19,28 @@ const Dashboard = () => {
         <ul>
         <li>
             <NavLink to="statistics">
-            <i className="ri-line-chart-fill"></i> Statistics
+            <i className="ri-line-chart-line"></i> Statistics
             </NavLink>
           </li>
           <li>
             <NavLink to="edit-listing">
-              <i className="ri-edit-box-fill"></i> Edit Listings
+              <i className="ri-edit-box-line"></i> Edit Listings
             </NavLink>
           </li>
           <li>
             <NavLink to="profile">
-              <i className="ri-user-fill"></i> My Profile
+              <i className="ri-user-line"></i> My Profile
             </NavLink>
           </li>
           <li>
             <NavLink to="add-website">
-              <i className="ri-add-box-fill"></i> Sell Website
+              <i className="ri-add-box-line"></i> Sell Website
             </NavLink>
           </li>
           <li>
-            <NavLink to="change-password">
-              <i className="ri-key-2-fill"></i> Change Password
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="../">
-              <i className="ri-logout-box-r-fill"></i> Logout
-            </NavLink>
+            <Link onClick={handleLogout} to="../login">
+              <i className="ri-logout-box-r-line"></i> Logout
+            </Link>
           </li>
         </ul>
       </div>

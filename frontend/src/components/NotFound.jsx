@@ -2,7 +2,7 @@ import React from 'react'
 
 const NotFound = () => {
   return (
-    <div style={{height:"400px",display:"flex",alignItems:"center",justifyContent:"center"}} className='product-not-found'>
+      <div style={{height:"400px",display:"flex",alignItems:"center",justifyContent:"center"}} className='product-not-found'>
         <div style={{textAlign:"center"}}>
           <h2 style={{marginBottom:"10px"}}>Requested page not found</h2>
           <p style={{marginBottom:"10px"}}>We're sorry. This page may have been removed!</p>

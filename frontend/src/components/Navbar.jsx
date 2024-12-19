@@ -1,14 +1,21 @@
 import React from "react";
 import { Link, NavLink , useLocation} from 'react-router-dom';
+import Logout from "./Logout";
 
 const Navbar = () => {
-const location = useLocation();
+
+  const handleLogout=()=>{
+    Logout();
+  }
+
+  const location = useLocation();
+
   return (
     <>
       <nav>
         <div className="nav-container">
           <div className="logo">
-                   <Link to=""><svg height={45} width={165} viewBox="0 0 2048 441" xmlns="http://www.w3.org/2000/svg">
+                    <Link to=""><svg height={45} width={165} viewBox="0 0 2048 441" xmlns="http://www.w3.org/2000/svg">
                         <path d="M780 94h97l18 2 20 5 16 8 11 8 10 9 11 14 9 16 6 16 5 22 2 20v30l-3 24-5 19-5 13-8 15-13 16-7 7-13 9-14 7-13 4-17 3-11 1h-95l-9-2-8-5-5-6-3-9-1-10V123l2-11 4-8 7-6 7-3zm41 43-11 1v180l1 1h46l17-1 13-3 12-6 10-9 8-11 6-14 4-15 2-14 1-21-1-19-3-17-5-16-9-14-9-9-10-6-19-5-9-1-21-1z" fill="#434342"/>
                         <path d="M124 91h40l17 3 17 6 11 6 10 8 10 10 6 10 4 10 1 4v14l-4 8-5 6-7 4-4 1h-8l-8-3-5-5-9-14-7-12-7-8-10-6-12-3-16-1-14 2-11 4-9 6-6 7-3 7v10l3 7 7 8 12 7 26 8 32 8 27 9 19 10 13 10 9 12 6 13 3 17v16l-3 16-7 16-7 10-8 9-12 9-16 8-20 6-17 2h-34l-17-2-16-5-12-5-11-7-10-9-9-10-8-14-5-13-1-5v-13l4-9 8-7 5-2h14l8 5 6 7 11 24 8 11 7 6 10 5 12 3h24l12-3 12-5 9-7 7-11 2-10-1-11-3-7-5-7-9-6-11-5-21-6-35-9-22-8-17-9-11-9-8-9-5-8-5-16-1-4v-21l4-15 7-13 7-9 9-8 13-8 19-7z" fill="#844EF7"/>
                         <path d="M1109 163h16l17 2 18 6 13 7 11 9 7 7 9 14 5 11 4 14 1 6v16l-4 11-8 7-9 3-17 2h-101l4 21 8 16 9 9 12 6 9 2h15l12-3 12-6 9-7 10-9 10-8 2-1h13l8 5 3 7v8l-4 11-8 10-8 8-11 7-16 7-15 4-10 1h-28l-16-2-18-6-13-7-10-8-9-9-10-15-6-15-4-15-1-7-1-20 2-21 6-21 8-16 9-12 8-8 15-10 15-6 16-4zm4 35-11 2-10 5-8 7-8 14-3 9-2 13 1 1h89l-2-17-5-12-6-9-7-6-10-5-11-2z" fill="#444443"/>
@@ -62,7 +69,7 @@ const location = useLocation();
                   <Link to="/dashboard"><i className="ri-dashboard-line"></i> Dashboard</Link>
                   <Link to="/login"><i className="ri-login-box-line"></i> Login</Link>
                   <Link to="/signup"><i className="ri-user-add-line"></i> Signup</Link>
-                  <Link to =""><i className="ri-logout-box-r-line"></i> Logout</Link>
+                  <Link onClick={handleLogout} to="../login"><i className="ri-logout-box-r-line"></i> Logout</Link>
                 </div>
             </div>
 
