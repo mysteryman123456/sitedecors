@@ -8,9 +8,6 @@ const cors = require('cors');
 // database 
 const pool = require('./db');
 
-// router
-const router = express.Router();
-
 //additional import for jwt
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -45,9 +42,6 @@ app.post("/login", async (req, res) => {
       res.status(500).json({ message: "Error logging in" });
     }
   });
-
-
-
 
   // signup code
   app.post("/signup", async (req, res) => {

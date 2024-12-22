@@ -22,7 +22,7 @@ const Signup = () => {
         body: JSON.stringify(signupData),
       });
       const data = await response.json();
-      if (response.ok && response.status == 201) {
+      if (response.ok && response.status === 201) {
         window.success(data.message);
       } else {
         window.failure(data.message);

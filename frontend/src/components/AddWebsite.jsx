@@ -332,7 +332,7 @@ const AddWebsite = () => {
     </div>
       <div className="submit-row">
       <div className="btn-grp">
-        <button disabled={loading == true ? true : false} onClick={handleSubmit} className="upload">{loading == true ? "Please wait..." : "Publish your listing"}</button>
+        <button disabled={loading === true ? true : false} onClick={handleSubmit} className="upload">{loading === true ? "Please wait..." : "Publish your listing"}</button>
       </div>
     </div>
     </>
