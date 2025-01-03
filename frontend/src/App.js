@@ -1,8 +1,7 @@
-import React from 'react'
 import "./styles/index.css"
 import 'remixicon/fonts/remixicon.css';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Footer from "./components/Footer"
+import Footer from "./components/Footer.tsx"
 import Navbar from "./components/Navbar"
 import Home from "./components/Home"
 import Login from "./components/Login"
@@ -15,8 +14,8 @@ import AddWebsite from "./components/AddWebsite"
 import NotFound from "./components/NotFound"
 import ForgotPassword from './components/ForgotPassword';
 import EmailInitiator from './components/EmailInitiator';
-// context
 import {SessionProvider} from "./context/SessionContext"
+
 function App() {
   return (
     <SessionProvider>

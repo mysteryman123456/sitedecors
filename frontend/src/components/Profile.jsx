@@ -62,7 +62,7 @@ const Profile = () => {
       <h2>Edit Profile</h2>
       <div className="ch-p-image-cta">
         <div className="ch-p-profile-image">
-          <img className='ch-p-image' src={profileData.profile_image.length == 1 ? profileData.profile_image[0].previewImage : Placeholder} alt="" />
+          <img className='ch-p-image' src={profileData.profile_image.length === 1 ? profileData.profile_image[0].previewImage : Placeholder} alt="" />
         </div>
           <input
             type="file"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from '../context/SessionContext';
 import "../styles/Dashboard.css";
 import SingleEditCard from './SingleEditCard';

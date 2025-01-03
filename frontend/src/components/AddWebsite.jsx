@@ -1,15 +1,17 @@
-import React, { useState , useEffect } from "react";
+import { useState , useEffect } from "react";
 import "../styles/AddWebsite.css";
-import categories from "../components/Categories";
+import ConfettiAnimation from './ConfettiAnimation';
+import categories from "./Categories";
 import {useSession} from "../context/SessionContext"
+import { useNavigate } from "react-router-dom";
 const AddWebsite = () => { 
+  const navigate = useNavigate();
   const[loading , setLoading] = useState(false);
   const {sessionData} = useSession();
   const bodyTag = "<body>"
-  const[copyReactIcon,setReactCopyIcon] = useState(false);
   const[copyHtmlIcon,setHtmlCopyIcon] = useState(false);
   const copyHtmlText = "<small style='display:none;'>SiteDecors-Verified-Listing</small>";
-  const copyReactText = '<small style={{display:"none"}}>SiteDecors-Verified-Listing</small>';
+
   const copyHtmlCode = () => {
     navigator.clipboard
       .writeText(copyHtmlText)
@@ -25,20 +27,12 @@ const AddWebsite = () => {
       });
   }
 
-  const copyReactCode = () => {
-    navigator.clipboard
-      .writeText(copyReactText)
-      .then(() => {
-        setReactCopyIcon(true);
-        setTimeout(()=>{
-          setReactCopyIcon(false);
-        },1000)
-      })
-      .catch((err) => {
-        setReactCopyIcon(false);
-        console.error("Failed to copy");
-      });
-  }
+  const [showConfetti, setShowConfetti] = useState(false);
+  const triggerConfetti = () => {
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 5000); 
+  };
+
 
   const[formData , setFormData] = useState({
     category : "",
@@ -110,14 +104,21 @@ const AddWebsite = () => {
     const{name , value} = e.target;
     setFormData({...formData , [name] : value});
   }
+  
   const handleSubmit = async () => {
     setLoading(true);
+    const website_url_regex =  /^https:\/\/(www\.)?([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(:[0-9]{1,5})?(\/[^\s]*)?(\?[^\s]*)?(#[^\s]*)?$/;
     for(let key in formData){
       const value = formData[key];
       if(typeof value === "string" && value.trim().length === 0){
         window.failure("Fields can't be empty")
         setLoading(false)
         return
+      }
+      if(key === "website_url" && !website_url_regex.test(value)){
+          window.failure("Provide valid website url")
+          setLoading(false);
+          return
       }
       if(Array.isArray(value) && value.length === 0 && key === "images"){
         window.failure("Image is required");
@@ -152,21 +153,24 @@ const AddWebsite = () => {
       });
       const data = await response.json();
       if (response.ok && response.status === 201) {
-        setLoading(false);
+        triggerConfetti();
         window.success(data.message);
       } else {
-        setLoading(false);
         window.failure(data.message); 
       }
     } catch (err) {
-      setLoading(false);
       window.failure("Please try again later"); 
+    }
+    finally{
+      setLoading(false);
     }
   };
 
   return (
     <>
     <div className="add-page">
+    {/* confetti code */}
+    {showConfetti && <ConfettiAnimation />}
       <div className="columns">
         <div className="column">
           <div className="container">
@@ -307,7 +311,7 @@ const AddWebsite = () => {
           </div>
           <div className="container owner">
             <h3>Ownership</h3>
-            <label>Html Code</label>
+            <label>Verification Code</label>
             <div className="ownership-code">
               <span>
                 {copyHtmlText}
@@ -316,16 +320,7 @@ const AddWebsite = () => {
                 {copyHtmlIcon === true ? <i className="ri-check-double-line"></i> : <i className="ri-clipboard-fill"></i>}
               </div>
             </div>
-            <label>React Code</label>
-            <div className="ownership-code">
-              <span>
-                {copyReactText}
-              </span>
-              <div onClick={copyReactCode} className="copy-icon">
-                {copyReactIcon === true ? <i className="ri-check-double-line"></i> : <i className="ri-clipboard-fill"></i>}
-              </div>
-            </div>
-            <small>Add the above code to your main landing page just below your {bodyTag} tag to verify your listing. Your listing will be verfied ASAP!</small>
+            <small>Add the above code to your main landing page (index.html) just below your {bodyTag} tag to verify your listing. Your listing will be verfied ASAP! </small>
           </div>
         </div>
       </div>

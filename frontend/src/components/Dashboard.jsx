@@ -1,4 +1,3 @@
-import React from 'react';
 import '../styles/Dashboard.css';
 import {Link, NavLink, Outlet} from 'react-router-dom';
 import useAuth from "./useAuth";

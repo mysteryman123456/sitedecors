@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 
+// for verification in /add-website code
+const https = require('https');
+const cheerio = require('cheerio');
+
 // cors and env file 
 require("dotenv").config();
 const cors = require('cors');
@@ -116,14 +120,48 @@ app.post("/add-website", upload, async (req, res) => {
       seller_email,
     } = req.body;
 
-    console.log(assets)
-    console.log(typeof assets)
+    let verified = false;
+
+      const fetchWebsite = (url) =>
+        new Promise((resolve, reject) => {
+          https.get(url, (response) => {
+            let html = '';
+            response.on('data', (chunk) => {
+              html += chunk;
+            });
+            response.on('end', () => {
+              try {
+                const $ = cheerio.load(html);
+                const isVerified = $("small")
+                  .filter((_, element) => $(element).text().trim() === "SiteDecors-Verified-Listing")
+                  .length > 0;
+                resolve(isVerified);
+              } catch (error) {
+                reject(error);
+              }
+            });
+          }).on('error', (error) => {
+            reject(error);
+          });
+        });
+
+    try {
+      verified = await fetchWebsite(website_url);
+    if(verified === false){
+      return res.json({message : "Lisiting verification failed"})
+    }
+    } catch (error) {
+      console.error(error.message);
+      return res.json({message : "Lisiting verification failed"})
+    }
+
+
     const isValidSeller = await pool.query("SELECT role from users where email = $1", [seller_email]);
     if (isValidSeller.rows.length === 1 && isValidSeller.rows[0].role === "seller") {
       
       const insertWebsite_detailsData = await pool.query(
         "INSERT INTO website_details (web_id, category, subcategory, price, negotiable, undisclosed, video_url, verified, views, seller_email, co_founder, funds) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
-        [web_id, category, subcategory, price, negotiable, undisclosed, video_url, false, 0, seller_email, co_founder, funds]
+        [web_id, category, subcategory, price, negotiable, undisclosed, video_url, verified, 0, seller_email, co_founder, funds]
       );
       const insertDescriptive_detailsData = await pool.query(
         "INSERT INTO descriptive_details (web_id, title , description , buyer_essentials, assets , website_url) VALUES ($1, $2, $3, $4, $5, $6)",[web_id, title , description , technical_description, JSON.stringify(assets) , website_url]
@@ -158,6 +196,7 @@ app.post("/add-website", upload, async (req, res) => {
 
 // home page data
 app.post("/", async (req, res) => {
+  let limit = 5;
   const {
     category,
     subcategory,
@@ -182,7 +221,7 @@ app.post("/", async (req, res) => {
   let conditions = [];
   let values = [];
   let index = 1;
-  
+  let orderBy = [];
   let query = `
     SELECT 
       website_details.web_id, 
@@ -191,6 +230,7 @@ app.post("/", async (req, res) => {
       website_details.subcategory, 
       website_details.views, 
       website_details.entry_time,
+      website_details.verified,
       website_details.undisclosed,
       website_details.negotiable, 
       descriptive_details.title, 
@@ -208,8 +248,9 @@ app.post("/", async (req, res) => {
       ON descriptive_details.web_id = website_details.web_id
     INNER JOIN users 
       ON users.email = website_details.seller_email
-  `;
+    `;
 
+  // Add conditions
   if (co_founder) {
     conditions.push(`website_details.co_founder = $${index++}`);
     values.push(co_founder);
@@ -266,25 +307,36 @@ app.post("/", async (req, res) => {
 
   // Handle ORDER BY conditions
   if (price === "l_h") {
-    query += " ORDER BY website_details.price ASC";
+    orderBy.push("website_details.price ASC");
   }
 
   if (price === "h_l") {
-    query += " ORDER BY website_details.price DESC";
+    orderBy.push("website_details.price DESC");
   }
 
   if (date === "recent") {
-    query += " ORDER BY website_details.entry_time DESC";
-  }
-
-  if (most_viewed) {
-    query += " ORDER BY website_details.views DESC LIMIT 1";
+    orderBy.push("website_details.entry_time DESC");
   }
 
   if (date === "oldest") {
-    query += " ORDER BY website_details.entry_time ASC";
+    orderBy.push("website_details.entry_time ASC");
   }
-  
+
+  if (most_viewed) {
+    orderBy.push("website_details.views DESC");
+  }
+
+
+  if (orderBy.length > 0) {
+    query += ` ORDER BY ${orderBy.join(", ")}`;
+  }
+
+  if (most_viewed) {
+    query += " LIMIT 1";
+  }
+
+  // query += ` LIMIT ${limit}`;
+
   try {
     const data = await pool.query(query, values);
 

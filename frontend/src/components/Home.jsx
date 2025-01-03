@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {NavLink, Link , useLocation, useParams} from "react-router-dom";
+import { Tooltip } from 'react-tooltip';
+
+
 import categories from '../components/Categories';
 
 const Home = () => {
@@ -47,7 +50,6 @@ const Home = () => {
             subcategory: subcategory,
         }));
     }, [category, subcategory]);
-    
     useEffect(() => {
         fetchData();
     }, [filterData]); 
@@ -339,18 +341,30 @@ const Home = () => {
                     <div className="card-content">
                         <div className="middle-content">
                             <h3 className="title">{item.title}</h3>
-                            <small>Sold By {item.username}</small>
-                            <div className="verified">
-                                {item.verified ? (
-                                    <>
-                                    Verified lisitng <i style={{color:"forestgreen"}} className="ri-verified-badge-fill"></i>
-                                    </>
-                                ) : (
-                                    <>
-                                    Unverified listing <i style={{color:"crimson"}} className="ri-close-circle-fill"></i>
-                                    </>
-                                )}
-                            </div>
+                            <small>Sold By <span style={{fontStyle:"italic"}}>{item.username}</span></small>
+                                    <div className="verified">
+                                    {item.verified === true ? (
+                                    <div>
+                                        <span
+                                        data-tooltip-id="verifiedTooltip"
+                                        data-tooltip-content="Author owns this listing"
+                                        >
+                                        Verified listing <i style={{ color: "forestgreen" }} className="ri-verified-badge-fill"></i>
+                                        </span>
+                                        <Tooltip id="verifiedTooltip" />
+                                    </div>
+                                    ) : (
+                                    <div>
+                                        <span
+                                        data-tooltip-id="unverifiedTooltip"
+                                        data-tooltip-content="Author may not own this listing"
+                                        >
+                                        Unverified listing <i style={{ color: "crimson" }} className="ri-close-circle-fill"></i>
+                                        </span>
+                                        <Tooltip id="unverifiedTooltip" />
+                                    </div>
+                                    )}
+                                    </div>
                             <p className="description">{item.description}...</p>
                             <div className="t-s-u">
                             <div className="tsu-content">
@@ -394,7 +408,7 @@ const Home = () => {
                             </div>
 
                             <div className="view-demo-btn">
-                                <Link to={"/"+item.website_url} className='live-btn'>< i className="ri-eye-line"></i>&nbsp;Live&nbsp;Demo</Link>
+                                <Link to={item.website_url} className='live-btn'>< i className="ri-eye-line"></i>&nbsp;Live&nbsp;Demo</Link>
                                 <Link to={"/"+item.category+"/"+item.subcategory+"/"+item.web_id} className='view-btn'>View&nbsp;Listing</Link>
                             </div>
                         </div>
@@ -417,17 +431,4 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
