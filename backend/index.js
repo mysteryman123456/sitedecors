@@ -196,7 +196,6 @@ app.post("/add-website", upload, async (req, res) => {
 
 // home page data
 app.post("/", async (req, res) => {
-  let limit = 5;
   const {
     category,
     subcategory,
@@ -335,8 +334,6 @@ app.post("/", async (req, res) => {
     query += " LIMIT 1";
   }
 
-  // query += ` LIMIT ${limit}`;
-
   try {
     const data = await pool.query(query, values);
 
@@ -351,7 +348,54 @@ app.post("/", async (req, res) => {
   }
 });
 
+app.get('/fetch-product-page', async (req, res) => {
+  const { web_id } = req.query;
+  try {
+    const product_sql = `
+    SELECT 
+    wd.video_url,
+    wd.price,
+    wd.category,
+    wd.subcategory,
+    wd.negotiable,
+    wd.co_founder,
+    wd.seller_email,
+    wd.views,
+    wd.funds,
+    wd.undisclosed,
+    wd.verified,
+    dd.description,
+    dd.assets,
+    dd.buyer_essentials,
+    dd.website_url,
+    dd.title,
+    Array(
+      SELECT image_url as images
+      FROM website_image 
+      WHERE website_image.web_id = wd.web_id 
+    ) AS image_url,
+    u.username as seller_name,
+    u.user_image as seller_image,
+    u.created_at as joined_date
+  FROM website_details wd
+  INNER JOIN descriptive_details dd
+    ON wd.web_id = dd.web_id
+  INNER JOIN users u
+    ON u.email = wd.seller_email
+  WHERE wd.web_id = $1
+    `;
 
+    const productData = await pool.query(product_sql, [web_id]);
+
+    if (productData.rows.length === 0) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    return res.json({message : productData.rows});
+  } catch (err) {
+    console.error('Error fetching product data:', err);
+    return res.status(500).json({ message: 'Failed to fetch product data' });
+  }
+});
 
 app.post("/fetch-edit-listing",async (req , res)=>{
     const {sellerEmail} = req.body;

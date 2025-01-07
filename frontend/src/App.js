@@ -14,6 +14,7 @@ import AddWebsite from "./components/AddWebsite"
 import NotFound from "./components/NotFound"
 import ForgotPassword from './components/ForgotPassword';
 import EmailInitiator from './components/EmailInitiator';
+import ProductPage from "./components/ProductPage.jsx";
 import {SessionProvider} from "./context/SessionContext"
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="statistics" element={<Satistics/>}/>
           <Route index element={<Satistics/>}/>
       </Route>
+      <Route path="/:category/:subcategory/:web_id" element={<ProductPage/>}/>
     </Routes>
     <Footer />
   </Router>
